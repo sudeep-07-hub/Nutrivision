@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv
+venv/
+
+# Data
+Dataset_1/
+Dataset_2/
+Dataset_3/
+
+# Models
+*.h5
+*.pt
+*.pth
+*.onnx
+
+# Logs
+logs/
+wandb/
+
+# OS
+.DS_Store

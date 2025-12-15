@@ -1,0 +1,7 @@
+Problem Statement
+
+--> Design a computer vision–based system that estimates calories and macronutrients        (carbohydrates, protein, fat) of Indian dishes from a single food image, using deep learning for dish recognition and heuristic portion estimation combined with recipe-based nutritional priors.
+
+Why this matters:
+
+--> Indian food is visually complex, highly mixed, and varies by cooking style, making calorie estimation difficult using existing food recognition systems.
