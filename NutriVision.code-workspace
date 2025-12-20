@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"name": "NutriVision",
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "annotation"
+	}
+}
