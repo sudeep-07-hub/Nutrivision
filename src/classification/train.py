@@ -43,14 +43,14 @@ for epoch in range(10): #Number of epochs
         images, lables = images.to(DEVICE), lables.to(DEVICE) # Move images and lables to device
 
         optimizer.zero_grad() # Zero the gradients accumulated in the previous batch
-        outputs = model(images)
-        loss = criterion(outputs, lables)
-        loss.backward()
-        optimizer.step()
+        outputs = model(images) # Forward pass
+        loss = criterion(outputs, lables) # Compute loss
+        loss.backward() # Backward pass
+        optimizer.step() # Update weights
 
-        running_loss += loss.items()
+        running_loss += loss.items() # Add loss to running loss
 
-    print(f"Epoch {epoch+1}, Loss: {running_loss/len(train_data_loder):.4f}")
+    print(f"Epoch {epoch+1}, Loss: {running_loss/len(train_data_loder):.4f}") # Print loss
 
-torch.save(model.state_dict(), "dish_classifier.pth")
+torch.save(model.state_dict(), "dish_classifier.pth") # Save model
 
