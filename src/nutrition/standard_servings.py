@@ -6,7 +6,7 @@ STANDARD_SERVINGS = {
     "butter_chicken" : 250,
     "daal_puri" : 200,
     "dal_makhani" : 250,
-    "kadai_pameer" : 250,
-    "palak_paneer" : 200,
-    "paneer_butter_masala" : 250
+    "kadai_panner" : 250,
+    "palak_panner" : 200,
+    "panner_butter_masala" : 250
 }

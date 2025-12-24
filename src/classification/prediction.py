@@ -1,8 +1,7 @@
 import torch
 from torchvision.transforms import transforms
 from PIL import Image
-from model import get_model
-from sklearn.metrics import accuracy_score, confusion_matrix
+from src.classification.model import get_model
 import numpy as np
 
 # check if GPU is available else use CPU
@@ -31,13 +30,6 @@ def predict(image_path):
 
     with torch.no_grad():
         outputs = model(image)
-        _, pred = torch.max(outputs, 1)
+        _, pred = torch.topk(outputs, 3)
 
     return CLASSES[pred.item()]
-
-
-if __name__ == "__main__":
-
-    image_path = input("Enter the path of the image: ")
-    dish = predict(image_path)
-    print(f"The dish is: {dish}")

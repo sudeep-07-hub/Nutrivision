@@ -54,7 +54,7 @@ RECIPE_PRIORS = {
         "spices": 0.05
     },
 
-    "kadai_paneer": {
+    "kadai_panner": {
         "paneer": 0.45,
         "capsicum_onion": 0.25,
         "tomato_gravy": 0.15,
