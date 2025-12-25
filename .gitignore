@@ -15,7 +15,6 @@ Dataset_3/
 # Models
 *.h5
 *.pt
-*.pth
 *.onnx
 
 # Logs
