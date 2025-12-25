@@ -7,7 +7,9 @@ import numpy as np
 # check if GPU is available else use CPU
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
-CLASSES = ["aloo_gobi", "aloo_methi", "bhindi_masala", "biryani", "butter_chicken","daal_puri","dal_makhani", "kadai_panner", "palak_panner", "panner_butter_masala"]  # List of classes
+CONFIDENCE_THRESHOLD = 0.85
+
+CLASSES = ["Besan_cheela", "Biryani", "Chapathi", "Chole_bature", "Dahl","Dhokla","Dosa", "Gulab_jamun", "Idli", "Jalebi","Pakoda","Pav_Bhaji","Poha","Rolls","Samosa","Vada_pav"] #List of classes
 
 model = get_model(num_classes=len(CLASSES))  # Get model
 model.load_state_dict(torch.load("dish_classifier.pth"))  # Load model
@@ -15,21 +17,44 @@ model.to(DEVICE)  # Move model to device
 model.eval()  # Set model to evaluation mode
 
 transform = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.ToTensor(),
+    transforms.Resize((224, 224)), #Resize image
+    transforms.ToTensor(), #Convert image to tensor
     transforms.Normalize(
         mean=[0.485, 0.456, 0.406],
         std=[0.229, 0.224, 0.225]
-    )
+    ) #Normalize image
 ])
 
 def predict(image_path):
-
-    image = Image.open(image_path).convert("RGB")
-    image = transform(image).unsqueeze(0).to(DEVICE)
+    image = Image.open(image_path).convert("RGB") #Open image
+    image = transform(image).unsqueeze(0).to(DEVICE) #Transform image
 
     with torch.no_grad():
-        outputs = model(image)
-        _, pred = torch.topk(outputs, 3)
+        outputs = model(image) #Forward pass
+        probs = torch.softmax(outputs, dim=1) #Get probabilities
 
-    return CLASSES[pred.item()]
+        top3_probs, top3_indices = torch.topk(probs, k=3, dim=1) #Get top-3 predictions
+
+    # Convert to Python lists
+    top3_indices = top3_indices[0].tolist()
+    top3_probs = top3_probs[0].tolist()
+
+    top3_dishes = [CLASSES[i] for i in top3_indices]
+
+    # Top-1 prediction
+    dish = top3_dishes[0]
+    confidence = top3_probs[0]
+
+    if confidence < CONFIDENCE_THRESHOLD:
+        return {
+        "status": "unknown",
+        "confidence": confidence,
+        "top3": list(zip(top3_dishes, top3_probs))
+    }
+
+    return {
+    "status": "ok",
+    "dish": dish,
+    "confidence": confidence,
+    "top3": list(zip(top3_dishes, top3_probs))
+    }

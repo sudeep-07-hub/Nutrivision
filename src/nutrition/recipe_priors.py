@@ -1,81 +1,106 @@
 RECIPE_PRIORS = {
 
-    "aloo_gobi": {
-        "potato": 0.50,
-        "cauliflower": 0.35,
-        "oil": 0.08,
-        "spices": 0.04,
-        "onion_tomato": 0.03
-    },
-
-    "aloo_methi": {
-        "potato": 0.55,
-        "methi_leaves": 0.25,
-        "oil": 0.10,
-        "spices": 0.05,
-        "onion": 0.05
-    },
-
-    "bhindi_masala": {
-        "bhindi": 0.65,
-        "onion_tomato": 0.20,
-        "oil": 0.10,
+    "Besan_cheela": {
+        "besan": 0.7,
+        "oil": 0.15,
+        "onion": 0.1,
         "spices": 0.05
     },
 
-    "biryani": {
-        "rice": 0.55,
-        "vegetables_or_meat": 0.25,
-        "oil_ghee": 0.12,
-        "onion": 0.05,
-        "spices": 0.03
+    "Biryani": {
+        "rice": 0.5,
+        "chicken": 0.3,
+        "oil": 0.1,
+        "spices": 0.1
     },
 
-    "butter_chicken": {
-        "chicken": 0.35,
-        "tomato_gravy": 0.30,
-        "butter_cream": 0.20,
-        "oil": 0.10,
+    "Chapathi": {
+        "wheat_flour": 0.8,
+        "oil": 0.1,
+        "water": 0.1
+    },
+
+    "Chole_bature": {
+        "chickpeas": 0.45,
+        "flour": 0.3,
+        "oil": 0.15,
+        "spices": 0.1
+    },
+
+    "Dahl": {
+        "lentils": 0.7,
+        "oil": 0.15,
+        "onion": 0.1,
         "spices": 0.05
     },
 
-    "daal_puri": {
-        "wheat_flour": 0.40,
-        "lentil_filling": 0.30,
-        "oil": 0.25,
+    "Dhokla": {
+        "gram_flour": 0.75,
+        "oil": 0.15,
+        "spices": 0.1
+    },
+
+    "Dosa": {
+        "rice_batter": 0.7,
+        "oil": 0.2,
+        "spices": 0.1
+    },
+
+    "Gulab_jamun": {
+        "milk_solids": 0.5,
+        "sugar_syrup": 0.4,
+        "oil": 0.1
+    },
+
+    "Idli": {
+        "rice_batter": 0.8,
+        "lentils": 0.2
+    },
+
+    "Jalebi": {
+        "flour": 0.5,
+        "sugar_syrup": 0.35,
+        "oil": 0.15
+    },
+
+    "Pakoda": {
+        "gram_flour": 0.5,
+        "vegetables": 0.25,
+        "oil": 0.25
+    },
+
+    "Pav_bhaji": {
+        "bread": 0.4,
+        "vegetable_curry": 0.4,
+        "butter": 0.15,
         "spices": 0.05
     },
 
-    "dal_makhani": {
-        "lentils": 0.45,
-        "tomato_gravy": 0.25,
-        "butter_cream": 0.20,
-        "oil": 0.05,
+    "Poha": {
+        "flattened_rice": 0.7,
+        "oil": 0.15,
+        "onion": 0.1,
         "spices": 0.05
     },
 
-    "kadai_panner": {
-        "paneer": 0.45,
-        "capsicum_onion": 0.25,
-        "tomato_gravy": 0.15,
-        "oil": 0.10,
+    "Rolls": {
+        "flour": 0.45,
+        "vegetables": 0.3,
+        "oil": 0.15,
+        "sauce": 0.1
+    },
+
+    "Samosa": {
+        "flour": 0.35,
+        "potato": 0.4,
+        "oil": 0.2,
         "spices": 0.05
     },
 
-    "palak_paneer": {
-        "paneer": 0.40,
-        "spinach_puree": 0.40,
-        "oil": 0.10,
-        "cream": 0.05,
-        "spices": 0.05
-    },
-
-    "paneer_butter_masala": {
-        "paneer": 0.35,
-        "tomato_gravy": 0.30,
-        "butter_cream": 0.25,
-        "oil": 0.05,
+    "Vada_pav": {
+        "potato": 0.45,
+        "bread": 0.35,
+        "oil": 0.15,
         "spices": 0.05
     }
-
 }

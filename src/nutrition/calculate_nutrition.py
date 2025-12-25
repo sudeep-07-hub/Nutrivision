@@ -10,16 +10,16 @@ def calculate_nutrition(ingredient_weights):
     }
 
     for ingredient, grams in ingredient_weights.items():
-        
-        if ingredient not in INGREDIENT_NUTRITION:
+
+        if ingredient not in INGREDIENT_NUTRITION: 
             continue
 
-        nutr = INGREDIENT_NUTRITION[ingredient]
-        factor = grams / 100
+        nutr = INGREDIENT_NUTRITION[ingredient] # calories, carbs, protein, fat
+        factor = grams / 100 # convert grams to kg
 
-        totals["calories"] += nutr["cal"] * factor
-        totals["carbs"] += nutr["carbs"] * factor
+        totals["calories"] += nutr["calories"] * factor
+        totals["carbs"] += nutr["carbs"] * factor 
         totals["protein"] += nutr["protein"] * factor
         totals["fat"] += nutr["fat"] * factor
     
-    return totals
+    return totals 

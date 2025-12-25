@@ -9,19 +9,34 @@ from src.nutrition.calculate_nutrition import calculate_nutrition
 
 def pipeline(image_path):
 
-    dish = predict(image_path)
+    result = predict(image_path) #get prediction
+
+    if result["status"] == "unknown": #if dish not recognized
+        return {
+            "status": "rejected",
+            "reason": "Dish not recognized with sufficient confidence",
+            "confidence": round(result["confidence"], 2),
+            "top3_predictions": [
+                {"dish": d, "confidence": round(c, 2)}
+                for d, c in result["top3"]
+            ]
+        }
+
+    dish = result["dish"] #get dish
+    confidence = result["confidence"] #get confidence
+
 
     if dish not in STANDARD_SERVINGS:
         raise ValueError(
-            f"Dish '{dish}' not supported. Please use a known Indian dish."
+            f"Dish '{dish}' not supported. Please use a known Indian dish." #if dish not supported
         )
-    _, mask = segment_food(image_path)
-    portion_ratio = estimation_portion(mask)
+    _, mask = segment_food(image_path) #segment food
+    portion_ratio = estimation_portion(mask) #get portion
     
-    total_weight = estimate_total_weight(portion_ratio, dish)
-    ingredient_weights = estimate_ingredient_weights(total_weight, dish)
+    total_weight = estimate_total_weight(portion_ratio, dish) #get total weight
+    ingredient_weights = estimate_ingredient_weights(total_weight, dish) #get ingredient weights
 
-    nutrition = calculate_nutrition(ingredient_weights)
+    nutrition = calculate_nutrition(ingredient_weights) #get nutrition
 
     return {
         "dish": dish,
@@ -36,12 +51,28 @@ def pipeline(image_path):
     }
 
 def format_result(result):
+
+    if result["status"] == "rejected":
+        output = f"""
+Dish Not Recognized
+
+Reason: {result.get("reason", "Low confidence prediction")}
+Confidence: {int(result["confidence"] * 100)}%
+
+Top predictions:
+"""
+        for pred in result.get("top3_predictions", []):
+            output += f" - {pred['dish'].replace('_', ' ').title()} ({int(pred['confidence'] * 100)}%)\n"
+
+        output += "\nPlease try an image of a supported Indian dish."
+        return output
+
     dish_name = result["dish"].replace("_", " ").title()
 
     output = f"""
-🍽️ Dish Identified: {dish_name}
+🍽 Dish: {dish_name}
 
-📏 Portion Estimation:
+📊 Portion Estimation:
 - Portion of plate: {int(result["portion_ratio"] * 100)}%
 - Estimated quantity: {result["estimated_weight_g"]} g
 
@@ -53,7 +84,6 @@ def format_result(result):
 """
     return output
 
-
-
-result = pipeline("/Users/sukesh/Desktop/NutriVision/Dataset/test/kadai_panner/0cbb1c68c2.jpg")
+ 
+result = pipeline("/Users/sukesh/Desktop/NutriVision/Dataset_3/Indian Food Images/boondi/0ad99f040e.jpg")
 print(format_result(result))
