@@ -18,4 +18,4 @@ STANDARD_SERVINGS = {
     "Rolls": 70,
     "Samosa": 70,
     "Vada_pav": 140
-}
+} # All the standard servings are in grams

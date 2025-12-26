@@ -7,9 +7,9 @@ import numpy as np
 # check if GPU is available else use CPU
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
-CONFIDENCE_THRESHOLD = 0.85
+CONFIDENCE_THRESHOLD = 0.65
 
-CLASSES = ["Besan_cheela", "Biryani", "Chapathi", "Chole_bature", "Dahl","Dhokla","Dosa", "Gulab_jamun", "Idli", "Jalebi","Pakoda","Pav_Bhaji","Poha","Rolls","Samosa","Vada_pav"] #List of classes
+CLASSES = ["Besan_cheela", "Biryani", "Chapathi", "Chole_bature", "Dahl","Dhokla","Dosa", "Gulab_jamun", "Idli", "Jalebi","Pakoda","Pav_bhaji","Poha","Rolls","Samosa","Vada_pav"] #List of classes
 
 model = get_model(num_classes=len(CLASSES))  # Get model
 model.load_state_dict(torch.load("dish_classifier.pth"))  # Load model
@@ -26,35 +26,32 @@ transform = transforms.Compose([
 ])
 
 def predict(image_path):
-    image = Image.open(image_path).convert("RGB") #Open image
-    image = transform(image).unsqueeze(0).to(DEVICE) #Transform image
+    image = Image.open(image_path).convert("RGB") # Open image
+    image = transform(image).unsqueeze(0).to(DEVICE) # Transform image
 
     with torch.no_grad():
-        outputs = model(image) #Forward pass
-        probs = torch.softmax(outputs, dim=1) #Get probabilities
+        outputs = model(image) # Forward pass
+        probs = torch.softmax(outputs, dim=1) # Compute probabilities
 
-        top3_probs, top3_indices = torch.topk(probs, k=3, dim=1) #Get top-3 predictions
+    top3_probs, top3_indices = torch.topk(probs, k=3, dim=1) # Get top 3 predictions
 
-    # Convert to Python lists
-    top3_indices = top3_indices[0].tolist()
-    top3_probs = top3_probs[0].tolist()
+    top3_indices = top3_indices[0].tolist() #  Convert to list
+    top3_probs = top3_probs[0].tolist() # Convert to list
+    top3_dishes = [CLASSES[i] for i in top3_indices] # Convert indices to class names
 
-    top3_dishes = [CLASSES[i] for i in top3_indices]
-
-    # Top-1 prediction
-    dish = top3_dishes[0]
-    confidence = top3_probs[0]
+    dish = top3_dishes[0] # Get dish
+    confidence = top3_probs[0] # Get confidence
 
     if confidence < CONFIDENCE_THRESHOLD:
         return {
-        "status": "unknown",
-        "confidence": confidence,
-        "top3": list(zip(top3_dishes, top3_probs))
-    }
+            "status": "unknown", # Return status
+            "confidence": confidence, # Return confidence
+            "top3": list(zip(top3_dishes, top3_probs)) # Return top 3 predictions
+        }
 
     return {
-    "status": "ok",
-    "dish": dish,
-    "confidence": confidence,
-    "top3": list(zip(top3_dishes, top3_probs))
+        "status": "ok", # Return status
+        "dish": dish, # Return dish
+        "confidence": confidence, # Return confidence
+        "top3": list(zip(top3_dishes, top3_probs)) # Return top 3 predictions
     }

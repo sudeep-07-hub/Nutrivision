@@ -79,6 +79,7 @@ for epoch in range(10):  # Number of epochs
     avg_val_loss = running_val_loss / len(test_data_loder) # Compute average loss
     val_losses.append(avg_val_loss) # Add average loss to list
 
+    #Early stopping
     # if avg_val_loss < best_val_loss:
     #     best_val_loss = avg_val_loss
     #     torch.save(model.state_dict(), "best_model.pth")
